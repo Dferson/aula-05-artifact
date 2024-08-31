@@ -1,4 +1,4 @@
-name: Example Workflow
+name: Go Example Workflow
 
 on:
   push:
@@ -18,22 +18,22 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build for Linux
-      run: go build ${FILE_NAME}.go
+      run: go build -o hello-server hello-server.go
 
     - name: Build for Windows
-      run: GOOS=windows GOARCH=amd64 go build ${FILE_NAME}.go
+      run: GOOS=windows GOARCH=amd64 go build -o hello-server.exe hello-server.go
 
     - name: Upload artifact for linux
       uses: actions/upload-artifact@v3
       with:
         name: linux
-        path: ./${FILE_NAME}
+        path: ./hello-server
 
     - name: Upload artifact for windows
       uses: actions/upload-artifact@v3
       with:
         name: windows
-        path: ./${FILE_NAME}.exe
+        path: ./hello-server.exe
 
   download-and-run-linux:
     needs: build-go
