@@ -1,4 +1,4 @@
-# GitHub Actions Workflow - Aula-05 Artifact
+# GitHub Actions Workflow - Aula 05 Artifact
 
 Este repositório contém um workflow do GitHub Actions configurado para executar builds e baixar artefatos para diferentes sistemas operacionais. O workflow foi criado como parte do exercício da **Aula 05**.
 
