@@ -1,8 +1,4 @@
-Aqui está um exemplo de README para o exercício solicitado:
-
----
-
-# GitHub Actions Workflow - README
+# GitHub Actions Workflow - Aula-05 Artifact
 
 Este repositório contém um workflow do GitHub Actions configurado para executar builds e baixar artefatos para diferentes sistemas operacionais. O workflow foi criado como parte do exercício da **Aula 05**.
 
@@ -34,7 +30,7 @@ Foram adicionados dois novos jobs no workflow `go-example.yml`, que dependem do 
 
 - **Identificador**: `download-and-run-linux`
 - **Nome**: Download and run Linux
-- **Runner**: Ubuntu (última versão)
+- **Runner**: Ubuntu latest
 - **Passos**:
   1. **Checkout do repositório**:
      ```yaml
@@ -58,7 +54,7 @@ Foram adicionados dois novos jobs no workflow `go-example.yml`, que dependem do 
 
 - **Identificador**: `download-only-windows`
 - **Nome**: Download Windows
-- **Runner**: Windows (última versão)
+- **Runner**: Windows latest
 - **Passos**:
   1. **Checkout do repositório**:
      ```yaml
@@ -92,5 +88,3 @@ jobs:
 ```
 
 ---
-
-Este README oferece uma visão geral das configurações do workflow e pode ser expandido conforme necessário.
