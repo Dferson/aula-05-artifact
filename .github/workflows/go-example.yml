@@ -1,0 +1,63 @@
+name: Example Workflow
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/15 * * * 1-6'  # Executa a cada 15 minutos de segunda a sábado
+
+env:
+  FILE_NAME: hello-server
+
+jobs:
+  build-go:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build for Linux
+      run: go build ${FILE_NAME}.go
+
+    - name: Build for Windows
+      run: GOOS=windows GOARCH=amd64 go build ${FILE_NAME}.go
+
+    - name: Upload artifact for linux
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux
+        path: ./${FILE_NAME}
+
+    - name: Upload artifact for windows
+      uses: actions/upload-artifact@v3
+      with:
+        name: windows
+        path: ./${FILE_NAME}.exe
+
+  download-and-run-linux:
+    needs: build-go
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Download Linux artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: linux
+
+    - name: Run script
+      run: source ./run.sh
+
+  download-only-windows:
+    needs: build-go
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Download Windows artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: windows
