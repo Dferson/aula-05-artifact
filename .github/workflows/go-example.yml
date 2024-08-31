@@ -1,11 +1,11 @@
-name: Go Example Workflow
+name: Example Workflow
 
 on:
   push:
     branches:
       - main
   schedule:
-    - cron: '*/15 * * * 1-6'  # Executa a cada 15 minutos de segunda a sábado
+    - cron: '*/15 * * * 1-6'
 
 env:
   FILE_NAME: hello-server
@@ -18,22 +18,22 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build for Linux
-      run: go build -o hello-server hello-server.go
+      run: go build -o ${{ env.FILE_NAME }} ${{ env.FILE_NAME }}.go
 
     - name: Build for Windows
-      run: GOOS=windows GOARCH=amd64 go build -o hello-server.exe hello-server.go
+      run: GOOS=windows GOARCH=amd64 go build -o ${{ env.FILE_NAME }}.exe ${{ env.FILE_NAME }}.go
 
     - name: Upload artifact for linux
       uses: actions/upload-artifact@v3
       with:
         name: linux
-        path: ./hello-server
+        path: ./${{ env.FILE_NAME }}
 
     - name: Upload artifact for windows
       uses: actions/upload-artifact@v3
       with:
         name: windows
-        path: ./hello-server.exe
+        path: ./${{ env.FILE_NAME }}.exe
 
   download-and-run-linux:
     needs: build-go
@@ -48,7 +48,7 @@ jobs:
         name: linux
 
     - name: Run script
-      run: source ./run.sh
+      run: chmod +x ./${{ env.FILE_NAME }} && ./${{ env.FILE_NAME }} &
 
   download-only-windows:
     needs: build-go
